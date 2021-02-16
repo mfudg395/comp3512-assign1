@@ -21,10 +21,17 @@ header {
     display: grid;
     grid-template-rows: repeat(6, 120px);
     grid-template-columns: repeat(6, 1fr);
-
-    border: 1px solid black;
 }
 
+.defaultView {
+    display: none; /*dynamically switches to none when chart view is selected*/
+}
+
+.chartView {
+    display: block; /*dynamically switches to block when chart view is selected*/
+}
+
+/*Default view layout*/
 #companyList {
     grid-column: span 1;
     grid-row: span 6;
@@ -46,20 +53,43 @@ header {
     border: 1px solid black;
 }
 
+/*Chart view layout*/
+#charts {
+    grid-row: span 6;
+    grid-column: span 4;
+}
+
+#companyChartInfo {
+    grid-row: span 2;
+    grid-column: span 2;
+}
+
+#financials {
+    grid-row: span 4;
+    grid-column: span 2;
+}
+
 #stockDataHead {
     display: flex;
+    justify-content: space-between;
     padding: 0;
-    border: 1px solid black;
-    justify-content: center;
 }
 
 #stockData h1 {
     display: inline;
+    margin-right: 50px;
 }
 
 #viewChartsButton {
     align-self: center;
-    justify-content: center;
+}
+
+button {
+    background-color: lightblue;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 24px;
 }
 
 #stockDataTable {
