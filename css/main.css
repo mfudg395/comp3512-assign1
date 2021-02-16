@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    background-color:lightslategray;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -43,8 +44,33 @@ header {
     grid-column: span 2;
 }
 
-td {
+#stockDataHead {
+    display: flex;
+    padding: 0;
     border: 1px solid black;
+    justify-content: center;
+}
+
+#stockData h1 {
+    display: inline;
+}
+
+#viewChartsButton {
+    align-self: center;
+    justify-content: center;
+}
+
+#stockDataTable {
+    width: 100%;
+}
+
+thead td {
+    font-weight: bold;
+    
+}
+
+td {
+    text-align: center;
 }
 
 .fadeIn {
