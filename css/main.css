@@ -4,16 +4,15 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-div {
+.defaultView, .chartView, header {
     background-color: lightgray;
-    padding: 1em;
+    padding: 16px;
     margin: 5px;
 
 }
 
 header {
     background-color: lightblue;
-    padding: 15px;
     margin: 0;
 }
 
@@ -32,25 +31,24 @@ header {
 }
 
 /*Default view layout*/
-#companyList {
+#companyListPanel {
     grid-column: span 1;
     grid-row: span 6;
 }
 
-#companyInfo {
+#companyInfoPanel {
     grid-row: span 3;
     grid-column: span 2;
 }
 
-#stockData {
+#stockDataPanel {
     grid-row: span 6;
     grid-column: span 3;
 }
 
-#map {
+#mapPanel {
     grid-row: span 3;
     grid-column: span 2;
-    border: 1px solid black;
 }
 
 /*Chart view layout*/
@@ -71,15 +69,16 @@ header {
 
 button {
     background-color: lightblue;
-    border: 1px solid black;
     border-radius: 8px;
     padding: 10px;
-    font-size: 24px;
 }
 
 .changeViewButton {
     width: 160px;
+    font-size: 24px;
 }
+
+
 
 #stockDataHead, #chartInfoHead {
     display: flex;
@@ -87,26 +86,46 @@ button {
     padding: 0;
 }
 
-#stockData h1 {
-    display: inline;
-    margin-right: 50px;
+#companyListHead {
+    text-align: center;
 }
 
-#viewChartsButton {
+#companySearch {
+   padding: 5px 8px;
+}
+
+.companyListButton {
+    padding: 0;
+    margin-top: 10px;
+    font-size: 16px;
+    width: 75px;
+    height: 30px;
+}
+
+#companyList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#companyList li {
+    border: 1px solid #ddd;
+    background-color: #c0c0c0;
+    padding: 5px;
+}
+
+#viewChartsButton, #closeButton {
     align-self: center;
 }
 
-#closeButton {
-    align-self: center;
-}
+
 
 #stockDataTable {
     width: 100%;
 }
 
 thead td {
-    font-weight: bold;
-    
+    font-weight: bold;  
 }
 
 td {
