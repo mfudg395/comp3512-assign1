@@ -77,6 +77,10 @@ button {
     font-size: 24px;
 }
 
+.changeViewButton {
+    width: 160px;
+}
+
 #stockDataHead, #chartInfoHead {
     display: flex;
     justify-content: space-between;
