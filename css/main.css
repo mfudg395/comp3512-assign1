@@ -24,11 +24,11 @@ header {
 }
 
 .defaultView {
-    display: none; /*dynamically switches to none when chart view is selected*/
+    display: block; /*dynamically switches to none when chart view is selected*/
 }
 
 .chartView {
-    display: block; /*dynamically switches to block when chart view is selected*/
+    display: none; /*dynamically switches to block when chart view is selected*/
 }
 
 /*Default view layout*/
@@ -69,7 +69,15 @@ header {
     grid-column: span 2;
 }
 
-#stockDataHead {
+button {
+    background-color: lightblue;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 24px;
+}
+
+#stockDataHead, #chartInfoHead {
     display: flex;
     justify-content: space-between;
     padding: 0;
@@ -84,12 +92,8 @@ header {
     align-self: center;
 }
 
-button {
-    background-color: lightblue;
-    border: 1px solid black;
-    border-radius: 8px;
-    padding: 10px;
-    font-size: 24px;
+#closeButton {
+    align-self: center;
 }
 
 #stockDataTable {
