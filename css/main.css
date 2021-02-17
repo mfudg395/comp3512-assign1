@@ -45,6 +45,7 @@ header {
 #stockDataPanel {
     grid-row: span 6;
     grid-column: span 3;
+    padding: 0;
 }
 
 #mapPanel {
@@ -82,7 +83,7 @@ button {
 #stockDataHead, #chartInfoHead {
     display: flex;
     justify-content: space-between;
-    padding: 0;
+    padding: 10px 20px;
 }
 
 #companyListHead {
@@ -129,12 +130,18 @@ button {
     width: 100%;
 }
 
+#stockDataTableContainer {
+    overflow-y: scroll;
+    height: 85.8%;
+}
+
 thead td {
     font-weight: bold;  
 }
 
 td {
     text-align: center;
+    padding: 5px;
 }
 
 .fadeIn {
