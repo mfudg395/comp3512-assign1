@@ -48,6 +48,12 @@ document.addEventListener('DOMContentLoaded', function() {
         let companies = await getCompanies(); // array for every Company object in companiesAPI
         document.querySelector('#companyLoadingAnimation').style.display = 'none';
 
+        document.querySelector('#clearButton').addEventListener('click', () => {
+            document.querySelector('#companySearch').value = "";
+            htmlCompanyList.innerHTML = "";
+            setCompanyList(companies);
+        });
+
         setCompanyList(companies);
         createFilter(companies);
     }
@@ -71,6 +77,9 @@ document.addEventListener('DOMContentLoaded', function() {
         for (let company of companies) {
             let element = document.createElement('li');
             element.textContent = company.name;
+            // element.addEventListener('click', function() {
+            //     console.log('foo');
+            // });
             htmlCompanyList.append(element);
         }
     }
@@ -94,35 +103,4 @@ document.addEventListener('DOMContentLoaded', function() {
             return obj.name.match(regex);
           });
     }
-
-    // former solution, not sure if I like it
-    // console.log(companies);
-    // let companies = getCompanies();
-    // console.log(companies);
-
-    // async function getCompanies() {
-    //     if (localStorage.getItem('companies')) {
-    //         console.log('local');
-    //         return JSON.parse(localStorage.getItem('companies'));
-    //     } else {
-    //         console.log('fetch');
-    //         const response = await fetch(companiesAPI);
-    //         const data = await response.json();
-    //         console.log(data);
-    //         localStorage.setItem('companies', JSON.stringify(companies));
-    //         return data;
-    //     }
-    // }
-    // function getCompanies() {
-    //     if (localStorage.getItem('companies')) {
-    //         return JSON.parse(localStorage.getItem('companies'));
-    //     } else {
-    //         fetch(companiesAPI)
-    //             .then((resp) => resp.json())
-    //             .then((data) => {
-    //                 localStorage.setItem('companies', JSON.stringify(data));
-    //                 return data;
-    //             });
-    //     }
-    // }
 });
