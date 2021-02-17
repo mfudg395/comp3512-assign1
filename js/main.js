@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const chartViewElements = document.querySelectorAll(".chartView");
     const viewButtons = document.querySelectorAll(".changeViewButton");
 
-    let htmlCompanyList = document.querySelector("#companyList");
+    let htmlCompanyList = document.querySelector("#companyList"); // Node for the unordered list of companies
+
     // Adding event listeners for the button that switches between views.
     for (let button of viewButtons) {
         button.addEventListener('click', function() {
@@ -38,21 +39,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    createCompanyList();
+
     /* Builds the 'Company List' panel by displaying the list of companies and adding
     * event listeners for the Filter box and the 'Go'/'Clear' buttons.
     */
-    createCompanyList();
-
     async function createCompanyList() {
-        let companies = await setCompanies();
+        let companies = await getCompanies(); // array for every Company object in companiesAPI
         document.querySelector('#companyLoadingAnimation').style.display = 'none';
 
         setCompanyList(companies);
         createFilter(companies);
-
     }
 
-    async function setCompanies() {
+    /* Returns an array of companies retrieved from companiesAPI. If the JSON data already exists
+    *  in local Storage, it is retrieved from there rather than from a fetch.
+    */
+    async function getCompanies() {
         if (localStorage.getItem('companies')) {
             return JSON.parse(localStorage.getItem('companies'));
         } else {
@@ -63,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Creates an <li> HTML element for each company and appends it to the HTML list in the DOM.
+    // Creates an <li> HTML element for each company and appends it to the node for the company list.
     function setCompanyList(companies) {
         for (let company of companies) {
             let element = document.createElement('li');
