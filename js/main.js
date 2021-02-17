@@ -1,5 +1,7 @@
 const companiesAPI = "https://www.randyconnolly.com/funwebdev/3rd/api/stocks/companies.php";
 
+let map;
+
 document.addEventListener('DOMContentLoaded', function() {
 
     const defaultViewElements = document.querySelectorAll(".defaultView");
@@ -77,11 +79,19 @@ document.addEventListener('DOMContentLoaded', function() {
         for (let company of companies) {
             let element = document.createElement('li');
             element.textContent = company.name;
-            // element.addEventListener('click', function() {
-            //     console.log('foo');
-            // });
+            element.addEventListener('click', function() {
+                setMap(company);
+            });
             htmlCompanyList.append(element);
         }
+    }
+
+    // Builds the Map panel, showing the location of a given company using the Google Maps JavaScript API.
+    function setMap(company) {
+        map = new google.maps.Map(document.querySelector('#mapPanel'), {
+            center: {lat: company.latitude, lng: company.longitude},
+            zoom: 18
+        });
     }
 
     /* Creates event listener for the Filter search bar in the Company List panel. When the text
