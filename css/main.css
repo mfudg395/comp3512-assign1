@@ -86,6 +86,10 @@ button {
     padding: 10px 20px;
 }
 
+#stockDataLoadingAnimation {
+    display: none; /*dynamically change to block while fetching data from stockDataAPI*/
+}
+
 #companyListHead {
     text-align: center;
     height: 20%;
@@ -128,6 +132,7 @@ button {
 
 #stockDataTable {
     width: 100%;
+    table-layout: fixed;
 }
 
 #stockDataTableContainer {
@@ -141,6 +146,7 @@ thead td {
 
 td {
     text-align: center;
+    border: 1px solid black;
     padding: 5px;
 }
 
