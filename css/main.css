@@ -124,6 +124,10 @@ button {
     padding: 5px;
 }
 
+#companyList li:hover {
+    cursor: pointer;
+}
+
 #viewChartsButton, #closeButton {
     align-self: center;
 }
@@ -140,8 +144,12 @@ button {
     height: 85.8%;
 }
 
-thead td {
-    font-weight: bold;  
+.tableHead {
+    font-weight: bold;
+}
+
+.tableHead:hover {
+    cursor: pointer;
 }
 
 td {
