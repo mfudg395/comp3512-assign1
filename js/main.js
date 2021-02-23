@@ -101,14 +101,33 @@ document.addEventListener('DOMContentLoaded', function() {
     // Builds the Stock Data panel, displaying a table of 3 months of stock data from the given company.
     async function setStockData(company) {
         const tableLoadingAnimation = document.querySelector('#stockDataLoadingAnimation');
-        const tableBody = stockTable.querySelector('tbody');
-        tableBody.innerHTML = ""; // clear all current data in table
+        const tableHeaders = stockTable.querySelectorAll('.tableHead');
 
         tableLoadingAnimation.style.display = 'block'; // display the loading animation during fetch
         const response = await fetch(stockDataAPI + company.symbol);
         const stockData = await response.json();
         tableLoadingAnimation.style.display = 'none'; // hide loading animation once fetch complete
 
+        for (let header of tableHeaders) {
+            header.addEventListener('click', () => {
+                const sortBy = header.textContent.toLowerCase();
+                stockData.sort(function(a, b) {
+                    if (sortBy == 'date') return a.date < b.date ? -1 : 1;
+                    if (sortBy == 'open') return a.open < b.open ? -1 : 1;
+                    if (sortBy == 'close') return a.close < b.close ? -1 : 1;
+                    if (sortBy == 'low') return a.low < b.low ? -1 : 1;
+                    if (sortBy == 'high') return a.high < b.high ? -1 : 1;
+                    if (sortBy == 'volume') return a.volume < b.volume ? -1 : 1;
+                })
+                populateStockDataTable(stockData);
+            })
+        }
+        populateStockDataTable(stockData);
+    }
+
+    function populateStockDataTable(stockData) {
+        const tableBody = stockTable.querySelector('tbody');
+        tableBody.innerHTML = "";
         for (let data of stockData) { // each piece of 'data' will be a single row in the table
             let row = document.createElement('tr');
 
