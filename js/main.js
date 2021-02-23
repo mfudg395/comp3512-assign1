@@ -2,6 +2,7 @@ const companiesAPI = "https://www.randyconnolly.com/funwebdev/3rd/api/stocks/com
 const stockDataAPI = "https://www.randyconnolly.com/funwebdev/3rd/api/stocks/history.php?symbol=";
 
 const currency = new Intl.NumberFormat('en-us', {style: 'currency', currency: 'USD'}); // used for formatting dollar values
+const asNumber = (currency) => {return Number(currency.replace(/(^\$,)/g,''));} // converts a currency to a number; solution adopted from https://stackoverflow.com/questions/31197542/javascript-sort-for-currency-string
 let map;
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -112,12 +113,13 @@ document.addEventListener('DOMContentLoaded', function() {
             header.addEventListener('click', () => {
                 const sortBy = header.textContent.toLowerCase();
                 stockData.sort(function(a, b) {
+                    console.log(typeof(a.volume));
                     if (sortBy == 'date') return a.date < b.date ? -1 : 1;
                     if (sortBy == 'open') return a.open < b.open ? -1 : 1;
                     if (sortBy == 'close') return a.close < b.close ? -1 : 1;
                     if (sortBy == 'low') return a.low < b.low ? -1 : 1;
                     if (sortBy == 'high') return a.high < b.high ? -1 : 1;
-                    if (sortBy == 'volume') return a.volume < b.volume ? -1 : 1;
+                    if (sortBy == 'volume') return asNumber(a.volume) < asNumber(b.volume) ? -1 : 1;
                 })
                 populateStockDataTable(stockData);
             })
