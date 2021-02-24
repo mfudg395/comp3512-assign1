@@ -4,28 +4,27 @@
         <title>COMP 3512 Assign1</title>
         <link rel="stylesheet" href="css/main.css">
     </head>
-    <body>
-        <header>
+    <body class="noMargin">
+        <header class="noMargin">
             <h1>COMP 3512 Assign1</h1>
         </header>
         <main class="container">
-            <div id="companyListPanel" class="fadeIn defaultView">
+            <div id="companyListPanel" class="fadeIn defaultView noPadding">
                 <div id="companyListHead">
                     <h2>Company List</h2>
                     <label>Filter: </label><input type="text" id="companySearch">
-                    <button class="companyListButton">Go</button>
-                    <button id="clearButton" class="companyListButton">Clear</button>
+                    <button id="clearButton" class="companyListButton noPadding">Clear</button>
                 </div>
                 <div id="companyListContainer">
                     <div id="companyLoadingAnimation" class="lds-ring"><div></div><div></div><div></div><div></div></div>
-                    <ul id="companyList">
+                    <ul id="companyList" class="noPadding noMargin">
 
                     </ul>
                 </div>
             </div>
             <div id="companyInfoPanel" class="fadeIn defaultView"><h1>Company Info</h1>
             </div>
-            <div id="stockDataPanel" class="fadeIn defaultView">
+            <div id="stockDataPanel" class="fadeIn defaultView noPadding">
                 <div id="stockDataHead">
                     <h1>Stock Data</h1>
                     <button id="viewChartsButton" class="changeViewButton">View Charts</button>
@@ -49,7 +48,7 @@
             </div>
             </div>
             <div id="mapPanel" class="fadeIn defaultView"></div>
-            <div id="stockSummary" class="fadeIn defaultView">
+            <div id="stockSummary" class="fadeIn defaultView noPadding">
                 <table id="stockSummaryTable">
                     <thead>
                     </thead>
@@ -87,7 +86,7 @@
                     <h1 id="companyName">Archer-Daniels-Midland Co</h1>
                     <button id="closeButton" class="changeViewButton">Close</button>
                 </div>
-                <h2 id="companySymbol">ADM</h2>
+                <h2 id="companySymbol" class="noPadding noMargin">ADM</h2>
                 <p id="companyChartInfoDescription">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat vel nobis sit, magnam adipisci sed. Eveniet, harum architecto. Autem exercitationem magnam illum, nostrum sint magni eveniet distinctio esse repellat quam.</p>
                 <img src="images/speaker.svg" id="speaker">
             </div>
