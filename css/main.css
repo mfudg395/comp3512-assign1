@@ -53,8 +53,9 @@ header {
     grid-column: span 2;
 }
 
-#stockAverages {
+#stockSummary {
     grid-column: span 3;
+    padding: 0;
 }
 
 /*Chart view layout*/
@@ -136,10 +137,14 @@ button {
     align-self: center;
 }
 
-
-
 #stockDataTable {
     width: 100%;
+    table-layout: fixed;
+}
+
+#stockSummaryTable {
+    width: 98.5%;
+    height: 100%;
     table-layout: fixed;
 }
 
