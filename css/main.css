@@ -83,13 +83,18 @@ button {
 
 #stockDataHead { padding: 10px 20px; }
 
+#chartInfoBody {
+    position: relative;
+}
+
 #companyChartInfoDescription {
     float: left;
     max-width: 90%;
 }
 
 #speaker {
-    float: right;
+    position: absolute;
+    right: 0;
     width: 50px;
 }
 
