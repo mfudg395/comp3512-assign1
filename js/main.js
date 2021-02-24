@@ -125,6 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
         }
         populateStockDataTable(stockData);
+        populateStockSummaryTable(stockData);
     }
 
     function populateStockDataTable(stockData) {
@@ -159,6 +160,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
             tableBody.appendChild(row);
         }
+    }
+
+    function populateStockSummaryTable(stockData) {
+        // stockData.sort(function(a, b,) {
+        //     return a.open > b.open ? 1 : -1;
+        // });
+        populateSummaryColumn(stockData, 'open');
+
+        let closeMin = stockData[0].close;
+
+        // for (let data of stockData) {
+        //     openSum += parseFloat(data.open);
+        //     openMin = parseFloat(data.open) < openMin ? data.open : openMin;
+        //     openMax = parseFloat(data.open) > openMax ? data.open : openMax;
+        // }
+        // let openAvgCell = document.createElement('td');
+        // openAvgCell.textContent = currency.format(openSum / stockData.length);
+        // averages.appendChild(openAvgCell);
+    }
+
+    function populateSummaryColumn(stockData, criteria) {
+        
+    }
+
+    // Calculates the average of a given criteria in the stockData array.
+    function calculateAverage(stockData, criteria) {
+        let sum = 0;
+        for (let data of stockData) {
+            sum += parseFloat(data[`${criteria}`]);
+        }
+        return sum / stockData.length;
     }
 
     /* Creates event listener for the Filter search bar in the Company List panel. When the text
