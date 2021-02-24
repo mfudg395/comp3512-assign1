@@ -88,7 +88,25 @@ button {
 #stockDataHead, #chartInfoHead {
     display: flex;
     justify-content: space-between;
+}
+
+#stockDataHead {
     padding: 10px 20px;
+}
+
+#companySymbol {
+    margin: 0;
+    padding: 0;
+}
+
+#companyChartInfoDescription {
+    float: left;
+    max-width: 90%;
+}
+
+#speaker {
+    float: right;
+    width: 50px;
 }
 
 #stockDataLoadingAnimation {
@@ -161,7 +179,7 @@ button {
     cursor: pointer;
 }
 
-td {
+.defaultView td {
     text-align: center;
     border: 1px solid black;
     padding: 5px;

@@ -23,7 +23,8 @@
                     </ul>
                 </div>
             </div>
-            <div id="companyInfoPanel" class="fadeIn defaultView"><h1>Company Info</h1></div>
+            <div id="companyInfoPanel" class="fadeIn defaultView"><h1>Company Info</h1>
+            </div>
             <div id="stockDataPanel" class="fadeIn defaultView">
                 <div id="stockDataHead">
                     <h1>Stock Data</h1>
@@ -42,7 +43,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
                     </tbody>
                 </table>
                 <div id="stockDataLoadingAnimation" class="lds-ring"><div></div><div></div><div></div><div></div></div>
@@ -56,15 +56,27 @@
                     <tbody>
                         <tr id="stockAverage">
                             <td class="tableHead">Average</td>
-
+                            <td id="openAvgCell"></td>
+                            <td id="closeAvgCell"></td>
+                            <td id="lowAvgCell"></td>
+                            <td id="highAvgCell"></td>
+                            <td id="volumeAvgCell"></td>
                         </tr>
                         <tr id="stockMin">
                             <td class="tableHead">Minimum</td>
-
+                            <td id="openMinCell"></td>
+                            <td id="closeMinCell"></td>
+                            <td id="lowMinCell"></td>
+                            <td id="highMinCell"></td>
+                            <td id="volumeMinCell"></td>
                         </tr>
                         <tr id="stockMax">
                             <td class="tableHead">Maximum</td>
-
+                            <td id="openMaxCell"></td>
+                            <td id="closeMaxCell"></td>
+                            <td id="lowMaxCell"></td>
+                            <td id="highMaxCell"></id>
+                            <td id="volumeMaxCell"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -72,9 +84,12 @@
             <div id="charts" class="fadeIn chartView"><h1>Charts</h1></div>
             <div id="companyChartInfo" class="fadeIn chartView">
                 <div id="chartInfoHead">
-                    <h1>Company Info</h1>
+                    <h1 id="companyName">Archer-Daniels-Midland Co</h1>
                     <button id="closeButton" class="changeViewButton">Close</button>
                 </div>
+                <h2 id="companySymbol">ADM</h2>
+                <p id="companyChartInfoDescription">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat vel nobis sit, magnam adipisci sed. Eveniet, harum architecto. Autem exercitationem magnam illum, nostrum sint magni eveniet distinctio esse repellat quam.</p>
+                <img src="images/speaker.svg" id="speaker">
             </div>
             <div id="financials" class="fadeIn chartView"><h1>Financials</h1></div>
         </main>
