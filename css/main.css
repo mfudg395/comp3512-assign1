@@ -1,5 +1,4 @@
 body {
-    margin: 0;
     background-color:lightslategray;
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -8,13 +7,9 @@ body {
     background-color: lightgray;
     padding: 16px;
     margin: 5px;
-
 }
 
-header {
-    background-color: lightblue;
-    margin: 0;
-}
+header { background-color: lightblue; }
 
 .container {
     display: grid;
@@ -22,19 +17,17 @@ header {
     grid-template-columns: repeat(6, 1fr);
 }
 
-.defaultView {
-    display: block; /*dynamically switches to none when chart view is selected*/
-}
+.noPadding { padding: 0; }
+.noMargin { margin: 0; }
 
-.chartView {
-    display: none; /*dynamically switches to block when chart view is selected*/
-}
+.defaultView { display: block; } /*dynamically switches to none when chart view is selected*/
+.chartView { display: none; } /*dynamically switches to block when chart view is selected*/
+#stockDataLoadingAnimation { display: none; } /*dynamically change to block while fetching data from stockDataAPI*/
 
 /*Default view layout*/
 #companyListPanel {
     grid-column: span 1;
     grid-row: span 6;
-    padding: 0;
 }
 
 #companyInfoPanel {
@@ -45,7 +38,6 @@ header {
 #stockDataPanel {
     grid-row: span 5;
     grid-column: span 3;
-    padding: 0;
 }
 
 #mapPanel {
@@ -55,7 +47,6 @@ header {
 
 #stockSummary {
     grid-column: span 3;
-    padding: 0;
 }
 
 /*Chart view layout*/
@@ -90,14 +81,7 @@ button {
     justify-content: space-between;
 }
 
-#stockDataHead {
-    padding: 10px 20px;
-}
-
-#companySymbol {
-    margin: 0;
-    padding: 0;
-}
+#stockDataHead { padding: 10px 20px; }
 
 #companyChartInfoDescription {
     float: left;
@@ -109,21 +93,14 @@ button {
     width: 50px;
 }
 
-#stockDataLoadingAnimation {
-    display: none; /*dynamically change to block while fetching data from stockDataAPI*/
-}
-
 #companyListHead {
     text-align: center;
     height: 20%;
 }
 
-#companySearch {
-   padding: 5px 8px;
-}
+#companySearch { padding: 5px 8px; }
 
-.companyListButton {
-    padding: 0;
+#clearButton {
     margin-top: 10px;
     font-size: 16px;
     width: 75px;
@@ -135,25 +112,14 @@ button {
     overflow-y: scroll;
 }
 
-#companyList {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-#companyList li {
+li {
     border: 1px solid #ddd;
     background-color: #c0c0c0;
     padding: 5px;
 }
+li:hover { cursor: pointer; }
 
-#companyList li:hover {
-    cursor: pointer;
-}
-
-#viewChartsButton, #closeButton {
-    align-self: center;
-}
+#viewChartsButton, #closeButton { align-self: center; }
 
 #stockDataTable {
     width: 100%;
@@ -171,13 +137,8 @@ button {
     height: 83%;
 }
 
-.tableHead {
-    font-weight: bold;
-}
-
-.tableHead:hover {
-    cursor: pointer;
-}
+.tableHead { font-weight: bold; }
+.tableHead:hover { cursor: pointer; }
 
 .defaultView td {
     text-align: center;
@@ -185,9 +146,7 @@ button {
     padding: 5px;
 }
 
-.fadeIn {
-	animation: fadeIn 0.75s linear forwards;
-}
+.fadeIn { animation: fadeIn 0.75s linear forwards; }
 
 @keyframes fadeIn {
 	0% {
