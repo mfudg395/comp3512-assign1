@@ -98,6 +98,10 @@ button {
     width: 50px;
 }
 
+#speaker:hover {
+    cursor: pointer;
+}
+
 #companyListHead {
     text-align: center;
     height: 20%;
