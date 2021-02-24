@@ -86,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
             element.addEventListener('click', function() {
                 setMap(company);
                 setStockData(company);
+                setChartCompanyInfo(company);
             });
             htmlCompanyList.append(element);
         }
@@ -125,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
         }
         populateStockDataTable(stockData);
-        populateStockSummaryTable(stockData);
+        //populateStockSummaryTable(stockData);
     }
 
     function populateStockDataTable(stockData) {
@@ -162,35 +163,55 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function populateStockSummaryTable(stockData) {
-        // stockData.sort(function(a, b,) {
-        //     return a.open > b.open ? 1 : -1;
-        // });
-        populateSummaryColumn(stockData, 'open');
+    // coming back to this... not sure what to do with it
+    // function populateStockSummaryTable(stockData) {
+    //     // stockData.sort(function(a, b,) {
+    //     //     return a.open > b.open ? 1 : -1;
+    //     // });
+    //     populateSummaryColumn(stockData, 'open');
 
-        let closeMin = stockData[0].close;
+    //     let closeMin = stockData[0].close;
 
-        // for (let data of stockData) {
-        //     openSum += parseFloat(data.open);
-        //     openMin = parseFloat(data.open) < openMin ? data.open : openMin;
-        //     openMax = parseFloat(data.open) > openMax ? data.open : openMax;
-        // }
-        // let openAvgCell = document.createElement('td');
-        // openAvgCell.textContent = currency.format(openSum / stockData.length);
-        // averages.appendChild(openAvgCell);
-    }
+    //     // for (let data of stockData) {
+    //     //     openSum += parseFloat(data.open);
+    //     //     openMin = parseFloat(data.open) < openMin ? data.open : openMin;
+    //     //     openMax = parseFloat(data.open) > openMax ? data.open : openMax;
+    //     // }
+    //     // let openAvgCell = document.createElement('td');
+    //     // openAvgCell.textContent = currency.format(openSum / stockData.length);
+    //     // averages.appendChild(openAvgCell);
+    // }
 
-    function populateSummaryColumn(stockData, criteria) {
+    // function populateSummaryColumn(stockData, criteria) {
         
-    }
+    // }
 
-    // Calculates the average of a given criteria in the stockData array.
-    function calculateAverage(stockData, criteria) {
-        let sum = 0;
-        for (let data of stockData) {
-            sum += parseFloat(data[`${criteria}`]);
-        }
-        return sum / stockData.length;
+    // // Calculates the average of a given criteria in the stockData array.
+    // function calculateAverage(stockData, criteria) {
+    //     let sum = 0;
+    //     for (let data of stockData) {
+    //         sum += parseFloat(data[`${criteria}`]);
+    //     }
+    //     return sum / stockData.length;
+    // }
+
+    // Builds the Company Info panel shown in the Chart view.
+    function setChartCompanyInfo(company) {
+        document.querySelector("#companyChartInfoName").textContent = company.name;
+        document.querySelector("#companyChartInfoSymbol").textContent = company.symbol;
+        document.querySelector("#companyChartInfoDescription").textContent = company.description;
+
+        /* Creating the Speaker that will say the company description. A new Speaker has to be made each
+        /* time a new company is clicked, otherwise the speech utterance will repeat descriptions that
+        /* have already been clicked. */
+        document.querySelector('#speaker').innerHTML = "";
+        const speakerImg = document.createElement('img');
+        speakerImg.setAttribute('src', 'images/speaker.svg');
+        speakerImg.addEventListener('click', () => {
+            const speech = new SpeechSynthesisUtterance(`${company.description}`);
+            speechSynthesis.speak(speech)
+        });
+        document.querySelector('#speaker').appendChild(speakerImg);
     }
 
     /* Creates event listener for the Filter search bar in the Company List panel. When the text
