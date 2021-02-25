@@ -45,13 +45,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    createCompanyList();
+    if (localStorage.getItem('companies')) {
+        const data = JSON.parse(localStorage.getItem('companies'));
+        createCompanyList(data);
+    } else {
+        fetch(companiesAPI)
+            .then(resp => resp.json())
+            .then (data => {
+                localStorage.setItem('companies', JSON.stringify(data));
+                createCompanyList(data);
+            })
+    }
 
-    /* Builds the 'Company List' panel by displaying the list of companies and adding
-    * event listeners for the Filter box and the 'Go'/'Clear' buttons.
-    */
-    async function createCompanyList() {
-        let companies = await getCompanies(); // array for every Company object in companiesAPI
+    function createCompanyList(companies) {
         document.querySelector('#companyLoadingAnimation').style.display = 'none';
 
         document.querySelector('#clearButton').addEventListener('click', () => {
@@ -62,20 +68,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         setCompanyList(companies);
         createFilter(companies);
-    }
-
-    /* Returns an array of companies retrieved from companiesAPI. If the JSON data already exists
-    *  in local Storage, it is retrieved from there rather than from a fetch.
-    */
-    async function getCompanies() {
-        if (localStorage.getItem('companies')) {
-            return JSON.parse(localStorage.getItem('companies'));
-        } else {
-            const response = await fetch(companiesAPI);
-            const data = await response.json();
-            localStorage.setItem('companies', JSON.stringify(data));
-            return data;
-        }
     }
 
     // Creates an <li> HTML element for each company and appends it to the node for the company list.
@@ -126,7 +118,6 @@ document.addEventListener('DOMContentLoaded', function() {
             })
         }
         populateStockDataTable(stockData);
-        //populateStockSummaryTable(stockData);
     }
 
     function populateStockDataTable(stockData) {
@@ -162,38 +153,6 @@ document.addEventListener('DOMContentLoaded', function() {
             tableBody.appendChild(row);
         }
     }
-
-    // coming back to this... not sure what to do with it
-    // function populateStockSummaryTable(stockData) {
-    //     // stockData.sort(function(a, b,) {
-    //     //     return a.open > b.open ? 1 : -1;
-    //     // });
-    //     populateSummaryColumn(stockData, 'open');
-
-    //     let closeMin = stockData[0].close;
-
-    //     // for (let data of stockData) {
-    //     //     openSum += parseFloat(data.open);
-    //     //     openMin = parseFloat(data.open) < openMin ? data.open : openMin;
-    //     //     openMax = parseFloat(data.open) > openMax ? data.open : openMax;
-    //     // }
-    //     // let openAvgCell = document.createElement('td');
-    //     // openAvgCell.textContent = currency.format(openSum / stockData.length);
-    //     // averages.appendChild(openAvgCell);
-    // }
-
-    // function populateSummaryColumn(stockData, criteria) {
-        
-    // }
-
-    // // Calculates the average of a given criteria in the stockData array.
-    // function calculateAverage(stockData, criteria) {
-    //     let sum = 0;
-    //     for (let data of stockData) {
-    //         sum += parseFloat(data[`${criteria}`]);
-    //     }
-    //     return sum / stockData.length;
-    // }
 
     // Builds the Company Info panel shown in the Chart view.
     function setChartCompanyInfo(company) {
