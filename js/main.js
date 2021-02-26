@@ -2,7 +2,10 @@ const companiesAPI = "https://www.randyconnolly.com/funwebdev/3rd/api/stocks/com
 const stockDataAPI = "https://www.randyconnolly.com/funwebdev/3rd/api/stocks/history.php?symbol=";
 
 const currency = new Intl.NumberFormat('en-us', {style: 'currency', currency: 'USD'}); // used for formatting dollar values
-const asNumber = (currency) => {return Number(currency.replace(/(^\$,)/g,''));} // converts a currency to a number; solution adopted from https://stackoverflow.com/questions/31197542/javascript-sort-for-currency-string
+
+/* converts a currency to a number, to be used when sorting table data 
+*  solution adopted from https://stackoverflow.com/questions/31197542/javascript-sort-for-currency-string*/
+const asNumber = (currency) => {return Number(currency.replace(/(^\$,)/g,''));} 
 let map;
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -10,6 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const defaultViewElements = document.querySelectorAll(".defaultView");
     const chartViewElements = document.querySelectorAll(".chartView");
     const viewButtons = document.querySelectorAll(".changeViewButton");
+
+    const tableLoadingAnimation = document.querySelector('#stockDataLoadingAnimation');
 
     let htmlCompanyList = document.querySelector("#companyList"); // Node for the unordered list of companies
     let stockTable = document.querySelector("#stockDataTable"); // Node for the table containing stock information
@@ -45,6 +50,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    /* Fetching the first set of data that will be used for this website. A list of clickable
+     * companies will be created, and stock information about a company will be displayed when
+     * it is clicked.
+     */
     if (localStorage.getItem('companies')) {
         const data = JSON.parse(localStorage.getItem('companies'));
         createCompanyList(data);
@@ -70,15 +79,25 @@ document.addEventListener('DOMContentLoaded', function() {
         createFilter(companies);
     }
 
-    // Creates an <li> HTML element for each company and appends it to the node for the company list.
+    /* Creates an <li> HTML element for each company and adds the event listener for each company on
+    *  that list. When a company is clicked, each panel needs to be filled in with data about that
+    *  company.
+    */
     function setCompanyList(companies) {
         for (let company of companies) {
             let element = document.createElement('li');
             element.textContent = company.name;
-            element.addEventListener('click', function() {
-                setMap(company);
-                setStockData(company);
+            element.addEventListener('click', async function() {
                 setChartCompanyInfo(company);
+                setMap(company);
+
+                tableLoadingAnimation.style.display = 'block';
+                const response = await fetch(stockDataAPI + company.symbol);
+                const stockData = await response.json();
+                tableLoadingAnimation.style.display = 'none';
+
+                setStockData(stockData);
+                
             });
             htmlCompanyList.append(element);
         }
@@ -92,21 +111,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Builds the Stock Data panel, displaying a table of 3 months of stock data from the given company.
-    async function setStockData(company) {
-        const tableLoadingAnimation = document.querySelector('#stockDataLoadingAnimation');
+    /* Builds the Stock Data panel, displaying a table of 3 months of stock data from the given company. If
+    *  a header on the table is clicked, the table will be sorted by that column going from least to greatest.
+    */ 
+    function setStockData(stockData) {
         const tableHeaders = stockTable.querySelectorAll('.tableHead');
-
-        tableLoadingAnimation.style.display = 'block'; // display the loading animation during fetch
-        const response = await fetch(stockDataAPI + company.symbol);
-        const stockData = await response.json();
-        tableLoadingAnimation.style.display = 'none'; // hide loading animation once fetch complete
 
         for (let header of tableHeaders) {
             header.addEventListener('click', () => {
                 const sortBy = header.textContent.toLowerCase();
                 stockData.sort(function(a, b) {
-                    console.log(typeof(a.volume));
                     if (sortBy == 'date') return a.date < b.date ? -1 : 1;
                     if (sortBy == 'open') return a.open < b.open ? -1 : 1;
                     if (sortBy == 'close') return a.close < b.close ? -1 : 1;
@@ -120,6 +134,8 @@ document.addEventListener('DOMContentLoaded', function() {
         populateStockDataTable(stockData);
     }
 
+    /* Populates the table node with cells for all the stock data about a company. 
+     */
     function populateStockDataTable(stockData) {
         const tableBody = stockTable.querySelector('tbody');
         tableBody.innerHTML = "";
