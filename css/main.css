@@ -87,6 +87,7 @@ button {
 #companyInfoPanelBody {
     display: flex;
     justify-content: space-between;
+    display: none;
 }
 
 #companyLocation, #companyURL {
