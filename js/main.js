@@ -88,19 +88,35 @@ document.addEventListener('DOMContentLoaded', function() {
             let element = document.createElement('li');
             element.textContent = company.name;
             element.addEventListener('click', function() {
+                setCompanyInfo(company);
                 setChartCompanyInfo(company);
                 setMap(company);
-
-                // tableLoadingAnimation.style.display = 'block';
-                // const response = await fetch(stockDataAPI + company.symbol);
-                // const stockData = await response.json();
-                // tableLoadingAnimation.style.display = 'none';
-
                 setStockData(company);
                 
             });
             htmlCompanyList.append(element);
         }
+    }
+
+    /* Builds the Company Info panel in the Default View, displaying all general information about the company
+    *  with data from the API. 
+    */
+    function setCompanyInfo(company) {
+        document.querySelector('#companyLogo').setAttribute('src', `images/logos/${company.symbol}.svg`)
+        document.querySelector('#companyName').textContent = company.name;
+        document.querySelector('#companySymbol').textContent = company.symbol;
+
+        document.querySelector('#companyInfoPanelBody').style.display = "flex";
+
+        document.querySelector('#companyDescription').textContent = company.description;
+        document.querySelector('#companySector').textContent = company.sector;
+        document.querySelector('#companySubIndustry').textContent = company.subindustry;
+        document.querySelector('#companyExchange').textContent = company.exchange;
+        document.querySelector('#companyLocation').textContent = company.address;
+
+        document.querySelector('#companyURL').textContent = company.website;
+        document.querySelector('#companyURL').setAttribute('href', company.website);
+
     }
 
     // Builds the Map panel, showing the location of a given company using the Google Maps JavaScript API.
@@ -117,10 +133,12 @@ document.addEventListener('DOMContentLoaded', function() {
     async function setStockData(company) {
         const tableLoadingAnimation = document.querySelector('#stockDataLoadingAnimation');
         const tableHeaders = stockTable.querySelectorAll('.tableHead');
+
         tableLoadingAnimation.style.display = 'block'; // display the loading animation during fetch
         const response = await fetch(stockDataAPI + company.symbol);
         const stockData = await response.json();
         tableLoadingAnimation.style.display = 'none'; // hide loading animation once fetch complete
+
         for (let header of tableHeaders) {
             header.addEventListener('click', () => {
                 const sortBy = header.textContent.toLowerCase();
