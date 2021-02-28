@@ -17,6 +17,8 @@ header { background-color: lightblue; }
     grid-template-columns: repeat(6, 1fr);
 }
 
+.bold { font-weight: bold; }
+
 .noPadding { padding: 0; }
 .noMargin { margin: 0; }
 
@@ -76,6 +78,26 @@ button {
     font-size: 24px;
 }
 
+#companyInfoPanelHeader {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#companyInfoPanelBody {
+    display: flex;
+    justify-content: space-between;
+}
+
+#companyLocation, #companyURL {
+    margin-right: 20px;
+}
+
+#companyLogo {
+    width: 25%;
+    height: 25%;
+}
+
 #stockDataHead, #chartInfoHead {
     display: flex;
     justify-content: space-between;
@@ -83,18 +105,13 @@ button {
 
 #stockDataHead { padding: 10px 20px; }
 
-#chartInfoBody {
-    position: relative;
-}
-
 #companyChartInfoDescription {
     float: left;
     max-width: 90%;
 }
 
 #speaker {
-    position: absolute;
-    right: 0;
+    float: right;
     width: 50px;
 }
 
