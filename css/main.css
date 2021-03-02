@@ -164,7 +164,7 @@ li:hover { cursor: pointer; }
 }
 
 .tableHead { font-weight: bold; }
-.tableHead:hover { cursor: pointer; }
+#stockDataTable .tableHead:hover { cursor: pointer; }
 
 .defaultView td, .chartView td {
     text-align: center;
