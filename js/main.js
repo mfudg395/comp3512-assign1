@@ -89,6 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 setMap(company);
                 setStockData(company);
 
+                setCharts(company);
                 setChartCompanyInfo(company);
                 setFinancials(company);
                 
@@ -187,6 +188,50 @@ document.addEventListener('DOMContentLoaded', function() {
 
             tableBody.appendChild(row);
         }
+    }
+
+    /* Builds the Charts panel, which contains a bar chart, a candlestick chart, and a line chart detailing
+    *  different information about a given company.
+    */
+    function setCharts(company) {
+        setBarChart(company);
+    }
+
+    function setBarChart(company) {
+        const barChart = echarts.init(document.querySelector('#barChartContainer'));
+
+        const chart = {
+            title: { text: `Financials` },
+            tooltip: {},
+            legend: { data: ['Revenue', 'Earnings', 'Assets', 'Liabilities'] },
+            xAxis: { data: ["2019", "2018", "2017"] },
+            yAxis: {},
+            grid: { containLabel: true },
+            series: [{
+                name: 'Revenue',
+                type: 'bar',
+                barGap: 0,
+                data: [company.financials.revenue[0], company.financials.revenue[1], company.financials.revenue[2], ]
+            }, {
+                name: 'Earnings',
+                type: 'bar',
+                barGap: 0,
+                data: [company.financials.earnings[0], company.financials.earnings[1], company.financials.earnings[2], ]
+            }, {
+                name: 'Assets',
+                type: 'bar',
+                barGap: 0,
+                data: [company.financials.assets[0], company.financials.assets[1], company.financials.assets[2], ]
+            }, {
+                name: 'Liabilities',
+                type: 'bar',
+                barGap: 0,
+                data: [company.financials.liabilities[0], company.financials.liabilities[1], company.financials.liabilities[2], ]
+            }],
+
+        };
+
+        barChart.setOption(chart);
     }
 
     // Builds the Company Info panel shown in the Chart view.
