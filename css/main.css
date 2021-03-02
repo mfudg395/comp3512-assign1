@@ -166,10 +166,16 @@ li:hover { cursor: pointer; }
 .tableHead { font-weight: bold; }
 .tableHead:hover { cursor: pointer; }
 
-.defaultView td {
+.defaultView td, .chartView td {
     text-align: center;
     border: 1px solid black;
     padding: 5px;
+}
+
+#financialsTable {
+    width: 100%;
+    height: 75%;
+    table-layout: fixed;
 }
 
 .fadeIn { animation: fadeIn 0.75s linear forwards; }
