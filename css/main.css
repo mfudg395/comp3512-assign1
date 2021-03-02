@@ -55,6 +55,7 @@ header { background-color: lightblue; }
 #charts {
     grid-row: span 6;
     grid-column: span 4;
+    text-align: center;
 }
 
 #companyChartInfo {
@@ -187,6 +188,20 @@ li:hover { cursor: pointer; }
 	100% {
 		opacity: 1;
 	}
+}
+
+#barChartContainer, #candlestickChartContainer {
+    width: 600px;
+    height: 300px;
+    display: inline-block;
+    border: 1px solid black;
+
+}
+
+#lineChartContainer {
+    width: 1200px;
+    height: 400px;
+    display: inline-block;
 }
 
 /*Loading animation source: https://loading.io/css/*/

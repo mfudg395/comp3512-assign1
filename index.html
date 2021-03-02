@@ -98,7 +98,11 @@
                     </tbody>
                 </table>
             </div>
-            <div id="charts" class="fadeIn chartView"><h1>Charts</h1></div>
+            <div id="charts" class="fadeIn chartView">
+                <div id="barChartContainer" class="noMargin noPadding"></div><!--
+                --><div id="candlestickChartContainer" class="noMargin noPadding"></div><!--
+                --><div id="lineChartContainer" class="noMargin noPadding"></div>
+            </div>
             <div id="companyChartInfo" class="fadeIn chartView">
                 <div id="chartInfoHead">
                     <h1 id="companyChartInfoName"></h1>
@@ -152,8 +156,10 @@
                     </tbody>
                 </table>
             </div>
+            
         </main>
         <script src="js/main.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-tZQJ7ooA7xMqISokkpwSe8BlNK1zbtQ&"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.0.2/echarts.min.js"></script>
     </body>
 </html>
