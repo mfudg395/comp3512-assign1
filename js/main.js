@@ -89,9 +89,11 @@ document.addEventListener('DOMContentLoaded', function() {
             element.textContent = company.name;
             element.addEventListener('click', function() {
                 setCompanyInfo(company);
-                setChartCompanyInfo(company);
                 setMap(company);
                 setStockData(company);
+
+                setChartCompanyInfo(company);
+                setFinancials(company);
                 
             });
             htmlCompanyList.append(element);
@@ -210,6 +212,28 @@ document.addEventListener('DOMContentLoaded', function() {
             speechSynthesis.speak(speech)
         });
         document.querySelector('#speaker').appendChild(speakerImg);
+    }
+
+    /* Builds the Financials panel, displaying a table of a given company's revenue, earnings, assets, and liabilities
+    *  over 3 years.
+    */ 
+    function setFinancials(company) {
+        const years = company.financials.years;
+        const revenues = company.financials.revenue;
+        const earnings = company.financials.earnings;
+        const assets = company.financials.assets;
+        const liabilities = company.financials.liabilities;
+    
+        /* The 'years' array stores year numbers at each index - 0 is 2019, 1 is 2018, and 2 is 2017. The arrays for each
+        *  type of financial data also follow this pattern (revenues[0] is the revenue for 2019, revenues[1] is 2018, etc).
+        *  This means that the index of a 'year' will be the same index of whichever financial data for that year.
+        */
+        for (let year of years) {
+            document.querySelector(`#rev${year}`).textContent = currency.format(revenues[years.indexOf(year)]);
+            document.querySelector(`#earn${year}`).textContent = currency.format(earnings[years.indexOf(year)]);
+            document.querySelector(`#asset${year}`).textContent = currency.format(assets[years.indexOf(year)]);
+            document.querySelector(`#lia${year}`).textContent = currency.format(liabilities[years.indexOf(year)]);
+        }
     }
 
     /* Creates event listener for the Filter search bar in the Company List panel. When the text
