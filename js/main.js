@@ -14,10 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const chartViewElements = document.querySelectorAll(".chartView");
     const viewButtons = document.querySelectorAll(".changeViewButton");
 
-    const tableLoadingAnimation = document.querySelector('#stockDataLoadingAnimation');
-
     let htmlCompanyList = document.querySelector("#companyList"); // Node for the unordered list of companies
-    let stockTable = document.querySelector("#stockDataTable"); // Node for the table containing stock information
 
     // Adding event listeners for the button that switches between views.
     for (let button of viewButtons) {
@@ -118,7 +115,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         document.querySelector('#companyURL').textContent = company.website;
         document.querySelector('#companyURL').setAttribute('href', company.website);
-
     }
 
     // Builds the Map panel, showing the location of a given company using the Google Maps JavaScript API.
@@ -134,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
     */ 
     async function setStockData(company) {
         const tableLoadingAnimation = document.querySelector('#stockDataLoadingAnimation');
-        const tableHeaders = stockTable.querySelectorAll('.tableHead');
+        const tableHeaders = document.querySelectorAll('#stockDataTable .tableHead');
 
         tableLoadingAnimation.style.display = 'block'; // display the loading animation during fetch
         const response = await fetch(stockDataAPI + company.symbol);
@@ -145,7 +141,6 @@ document.addEventListener('DOMContentLoaded', function() {
             header.addEventListener('click', () => {
                 const sortBy = header.textContent.toLowerCase();
                 stockData.sort(function(a, b) {
-                    console.log(typeof(a.volume));
                     if (sortBy == 'date') return a.date < b.date ? -1 : 1;
                     if (sortBy == 'open') return a.open < b.open ? -1 : 1;
                     if (sortBy == 'close') return a.close < b.close ? -1 : 1;
@@ -159,10 +154,9 @@ document.addEventListener('DOMContentLoaded', function() {
         populateStockDataTable(stockData);
     }
 
-    /* Populates the table node with cells for all the stock data about a company. 
-     */
+    // Populates the table node with cells for all the stock data about a company. 
     function populateStockDataTable(stockData) {
-        const tableBody = stockTable.querySelector('tbody');
+        const tableBody = document.querySelector('#stockDataTable tbody');
         tableBody.innerHTML = "";
         for (let data of stockData) { // each piece of 'data' will be a single row in the table
             let row = document.createElement('tr');
@@ -253,6 +247,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return companies.filter(obj => {
             const regex = new RegExp(`^${value}`, 'i');
             return obj.name.match(regex);
-          });
+        });
     }
 });
