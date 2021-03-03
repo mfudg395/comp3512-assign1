@@ -71,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function() {
             htmlCompanyList.innerHTML = "";
             setCompanyList(companies);
         });
-
         setCompanyList(companies);
         createFilter(companies);
     }
@@ -97,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 setMap(company);
                 setStockData(stockData);
 
-                setCharts(company);
+                setCharts(company, stockData);
                 setChartCompanyInfo(company);
                 setFinancials(company);
                 
@@ -195,15 +194,14 @@ document.addEventListener('DOMContentLoaded', function() {
     /* Builds the Charts panel, which contains a bar chart, a candlestick chart, and a line chart detailing
     *  different information about a given company.
     */
-    function setCharts(company) {
+    function setCharts(company, stockData) {
         setBarChart(company);
-        setLineChart(company);
+        setLineChart(stockData);
     }
 
     //  Creates the bar chart, which displays a given company's financial information for 2019, 2018, and 2017.
     function setBarChart(company) {
         const barChart = echarts.init(document.querySelector('#barChartContainer'));
-
         const chart = {
             title: { text: `Financials` },
             tooltip: {},
@@ -216,7 +214,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 top: 40,
                 right: 0,
                 bottom: 0
-
             },
             series: [{
                 name: 'Revenue',
@@ -241,13 +238,53 @@ document.addEventListener('DOMContentLoaded', function() {
             }],
 
         };
-
         barChart.setOption(chart);
     }
 
     // Creates the line chart, which plots the 'close' and 'volume' values of a given company.
-    function setLineChart(company) {
-        // TODO
+    function setLineChart(stockData) {
+        const lineChart = echarts.init(document.querySelector('#lineChartContainer'));
+        let volData = [];
+        let closeData = [];
+        let dates = [];
+        for (let i = 0; i < stockData.length; i += 1) {
+            volData.push(stockData[i].volume);
+            closeData.push(stockData[i].close);
+            dates.push(stockData[i].date);
+        }
+        const chart = {
+            tooltip: {},
+            legend: { data: ['Volume', 'Close'] },
+            xAxis: { data: dates},
+            yAxis: [{
+                type: 'value',
+                name: 'Volume',
+            }, {
+                type: 'value',
+                name: 'Close',
+                splitLine: {
+                    show: false
+                }
+            }],
+            grid: {
+                containLabel: true,
+                left: 20,
+                top: 40,
+                right: 20,
+                bottom: 0
+            },
+            series: [{
+                name: 'Volume',
+                type: 'line',
+                data: volData
+            }, {
+                name: 'Close',
+                type: 'line',
+                yAxisIndex: 1,
+                data: closeData
+            }],
+        };
+        lineChart.setOption(chart);
     }
 
     // Builds the Company Info panel shown in the Chart view.
