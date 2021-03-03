@@ -200,8 +200,9 @@ li:hover { cursor: pointer; }
 
 #lineChartContainer {
     width: 1200px;
-    height: 400px;
+    height: 375px;
     display: inline-block;
+    border: 1px solid black;
 }
 
 /*Loading animation source: https://loading.io/css/*/
