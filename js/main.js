@@ -81,13 +81,21 @@ document.addEventListener('DOMContentLoaded', function() {
     *  company.
     */
     function setCompanyList(companies) {
+        const tableLoadingAnimation = document.querySelector('#stockDataLoadingAnimation');
         for (let company of companies) {
             let element = document.createElement('li');
             element.textContent = company.name;
-            element.addEventListener('click', function() {
+            element.addEventListener('click', async function() {
+                // On company click, fetch stock data about that company
+                tableLoadingAnimation.style.display = 'block';
+                const response = await fetch(stockDataAPI + company.symbol);
+                const stockData = await response.json();
+                tableLoadingAnimation.style.display = 'none';
+
+                // Building each panel based on the clicked company.
                 setCompanyInfo(company);
                 setMap(company);
-                setStockData(company);
+                setStockData(stockData);
 
                 setCharts(company);
                 setChartCompanyInfo(company);
@@ -129,14 +137,8 @@ document.addEventListener('DOMContentLoaded', function() {
     /* Builds the Stock Data panel, displaying a table of 3 months of stock data from the given company. If
     *  a header on the table is clicked, the table will be sorted by that column going from least to greatest.
     */ 
-    async function setStockData(company) {
-        const tableLoadingAnimation = document.querySelector('#stockDataLoadingAnimation');
+    async function setStockData(stockData) {
         const tableHeaders = document.querySelectorAll('#stockDataTable .tableHead');
-
-        tableLoadingAnimation.style.display = 'block'; // display the loading animation during fetch
-        const response = await fetch(stockDataAPI + company.symbol);
-        const stockData = await response.json();
-        tableLoadingAnimation.style.display = 'none'; // hide loading animation once fetch complete
 
         for (let header of tableHeaders) {
             header.addEventListener('click', () => {
@@ -195,8 +197,10 @@ document.addEventListener('DOMContentLoaded', function() {
     */
     function setCharts(company) {
         setBarChart(company);
+        setLineChart(company);
     }
 
+    //  Creates the bar chart, which displays a given company's financial information for 2019, 2018, and 2017.
     function setBarChart(company) {
         const barChart = echarts.init(document.querySelector('#barChartContainer'));
 
@@ -239,6 +243,11 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         barChart.setOption(chart);
+    }
+
+    // Creates the line chart, which plots the 'close' and 'volume' values of a given company.
+    function setLineChart(company) {
+        // TODO
     }
 
     // Builds the Company Info panel shown in the Chart view.
