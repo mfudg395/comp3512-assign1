@@ -206,7 +206,14 @@ document.addEventListener('DOMContentLoaded', function() {
             legend: { data: ['Revenue', 'Earnings', 'Assets', 'Liabilities'] },
             xAxis: { data: ["2019", "2018", "2017"] },
             yAxis: {},
-            grid: { containLabel: true },
+            grid: { 
+                containLabel: true,
+                left: 0,
+                top: 40,
+                right: 0,
+                bottom: 0
+
+            },
             series: [{
                 name: 'Revenue',
                 type: 'bar',
