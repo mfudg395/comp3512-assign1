@@ -4,8 +4,8 @@ const stockDataAPI = "https://www.randyconnolly.com/funwebdev/3rd/api/stocks/his
 const currency = new Intl.NumberFormat('en-us', {style: 'currency', currency: 'USD'}); // used for formatting dollar values
 
 /* converts a currency to a number, to be used when sorting table data 
-*  solution adopted from https://stackoverflow.com/questions/31197542/javascript-sort-for-currency-string*/
-const asNumber = (currency) => {return Number(currency.replace(/(^\$,)/g,''));} 
+*  adopted from https://stackoverflow.com/questions/31197542/javascript-sort-for-currency-string*/
+const asNumber = (currency) => {return Number(currency.replace(/($,)/g,''));} 
 let map;
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -168,27 +168,73 @@ document.addEventListener('DOMContentLoaded', function() {
             row.appendChild(dateCell);
 
             let openCell = document.createElement('td');
-            openCell.textContent = currency.format(data.open);
-            row.appendChild(openCell);
-
             let closeCell = document.createElement('td');
-            closeCell.textContent = currency.format(data.close);
-            row.appendChild(closeCell);
-
             let lowCell = document.createElement('td');
-            lowCell.textContent = currency.format(data.low);
-            row.appendChild(lowCell);
-
             let highCell = document.createElement('td');
-            highCell.textContent = currency.format(data.high);
-            row.appendChild(highCell);
-
             let volumeCell = document.createElement('td');
-            volumeCell.textContent = currency.format(data.volume);
-            row.appendChild(volumeCell);
 
+            openCell.textContent = currency.format(data.open);
+            closeCell.textContent = currency.format(data.close);
+            lowCell.textContent = currency.format(data.low);
+            highCell.textContent = currency.format(data.high);
+            volumeCell.textContent = currency.format(data.volume);
+
+            row.appendChild(openCell);
+            row.appendChild(closeCell);
+            row.appendChild(lowCell);
+            row.appendChild(highCell);
+            row.appendChild(volumeCell);
             tableBody.appendChild(row);
         }
+        populateStockSummaryTable(stockData);
+    }
+
+    // Populates the table nodes with cells for the "summary" data about a company's stocks (averages, minimums, and maximums).
+    function populateStockSummaryTable(stockData) {
+        const openData = stockData.map(stock => stock.open);
+        const closeData = stockData.map(stock => stock.close);
+        const lowData = stockData.map(stock => stock.low);
+        const highData = stockData.map(stock => stock.high);
+        const volumeData = stockData.map(stock => stock.volume);
+        
+        document.querySelector('#openAvgCell').textContent = currency.format(average(openData));
+        document.querySelector('#closeAvgCell').textContent = currency.format(average(closeData));
+        document.querySelector('#lowAvgCell').textContent = currency.format(average(lowData));
+        document.querySelector('#highAvgCell').textContent = currency.format(average(highData));
+        document.querySelector('#volumeAvgCell').textContent = currency.format(average(volumeData));
+
+        document.querySelector('#openMinCell').textContent = currency.format(minimum(openData));
+        document.querySelector('#closeMinCell').textContent = currency.format(minimum(closeData));
+        document.querySelector('#lowMinCell').textContent = currency.format(minimum(lowData));
+        document.querySelector('#highMinCell').textContent = currency.format(minimum(highData));
+        document.querySelector('#volumeMinCell').textContent = currency.format(minimum(volumeData));
+
+        document.querySelector('#openMaxCell').textContent = currency.format(maximum(openData));
+        document.querySelector('#closeMaxCell').textContent = currency.format(maximum(closeData));
+        document.querySelector('#lowMaxCell').textContent = currency.format(maximum(lowData));
+        document.querySelector('#highMaxCell').textContent = currency.format(maximum(highData));
+        document.querySelector('#volumeMaxCell').textContent = currency.format(maximum(volumeData));
+    }
+
+    // Returns the average of a given array of decimal numbers.
+    function average(arr) {
+        let sum = 0;
+        for (let data of arr) sum += parseFloat(data);
+        return sum / arr.length;
+    }
+
+    // Returns the minimum of a given array of decimal numbers.
+    function minimum(arr) {
+        let min = parseFloat(arr[0]);
+        for (let data of arr) min = parseFloat(data) < min ? parseFloat(data) : min;
+        return min;
+    }
+
+    // Returns the maximum of a given array of decimal numbers.
+    function maximum(arr) {
+        let max = parseFloat(arr[0]);
+        for (let data of arr) max = parseFloat(data) > max ? parseFloat(data) : max;
+        return max;
     }
 
     /* Builds the Charts panel, which contains a bar chart, a candlestick chart, and a line chart detailing
