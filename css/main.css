@@ -1,26 +1,31 @@
 body {
-    background-color:lightslategray;
-    font-family: Arial, Helvetica, sans-serif;
+    background-color:#9c9c9c;
+    font-family: Arial, Helvetica, sans-serif, sans-serif;
 }
 
 .defaultView, .chartView, header {
-    background-color: lightgray;
+    background-color: #c4c4c4;
+    box-shadow: 10px 10px 10px grey;
+    border-radius: 15px;
     padding: 16px;
     margin: 5px;
 }
 
+.bold { font-weight: bold; }
+.noPadding { padding: 0; }
+.noMargin { margin: 0; }
+
 header { background-color: lightblue; }
+header h1 {
+    display: inline-block;
+}
+.assignmentInfo { display: none; }
 
 .container {
     display: grid;
     grid-template-rows: repeat(6, 120px);
     grid-template-columns: repeat(6, 1fr);
 }
-
-.bold { font-weight: bold; }
-
-.noPadding { padding: 0; }
-.noMargin { margin: 0; }
 
 .defaultView { display: block; } /*dynamically switches to none when chart view is selected*/
 .chartView { display: none; } /*dynamically switches to block when chart view is selected*/
@@ -116,9 +121,7 @@ button {
     width: 50px;
 }
 
-#speaker:hover {
-    cursor: pointer;
-}
+#speaker:hover { cursor: pointer; }
 
 #companyListHead {
     text-align: center;
@@ -147,16 +150,15 @@ li {
 li:hover { cursor: pointer; }
 
 #viewChartsButton, #closeButton { align-self: center; }
+.fixedTable { table-layout: fixed; }
 
 #stockDataTable {
     width: 100%;
-    table-layout: fixed;
 }
 
 #stockSummaryTable {
     width: 98.5%;
     height: 100%;
-    table-layout: fixed;
 }
 
 #stockDataTableContainer {
@@ -176,7 +178,6 @@ li:hover { cursor: pointer; }
 #financialsTable {
     width: 100%;
     height: 75%;
-    table-layout: fixed;
 }
 
 .fadeIn { animation: fadeIn 0.75s linear forwards; }
@@ -191,18 +192,16 @@ li:hover { cursor: pointer; }
 }
 
 #barChartContainer, #candlestickChartContainer {
-    width: 600px;
+    width: 550px;
     height: 300px;
     display: inline-block;
-    border: 1px solid black;
-
 }
-
+#barChartContainer { margin-right: 25px; }
+#candlestickChartContainer { margin-left: 25px; }
 #lineChartContainer {
     width: 1200px;
     height: 375px;
     display: inline-block;
-    border: 1px solid black;
 }
 
 /*Loading animation source: https://loading.io/css/*/

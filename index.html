@@ -3,10 +3,15 @@
         <meta charset="utf-8"/>  
         <title>COMP 3512 Assign1</title>
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
     </head>
     <body class="noMargin">
         <header class="noMargin">
-            <h1>COMP 3512 Assign1</h1>
+            <h1>COMP 3512 Assignment 1</h1>
+            <i class="fas fa-pencil-alt credits">
+                <span class="assignmentInfo">Completed by Matthew Fudge for COMP-3512 - Web II: Web Application Development at Mount Royal University.<br>
+                This assignment uses the Google Maps JavaScript API to display maps, Apache ECharts to create financial charts, and an icon from the Font Awesome icon library.</span>
+            </i>
         </header>
         <main class="container">
             <div id="companyListPanel" class="fadeIn defaultView noPadding">
@@ -48,7 +53,7 @@
                     <button id="viewChartsButton" class="changeViewButton">View Charts</button>
                 </div>
                 <div id="stockDataTableContainer">
-                <table id="stockDataTable">
+                <table id="stockDataTable" class="fixedTable">
                     <thead>
                         <tr>
                             <td class="tableHead">Date</td>
@@ -67,7 +72,7 @@
             </div>
             <div id="mapPanel" class="fadeIn defaultView"></div>
             <div id="stockSummary" class="fadeIn defaultView noPadding">
-                <table id="stockSummaryTable">
+                <table id="stockSummaryTable" class="fixedTable">
                     <thead>
                     </thead>
                     <tbody>
@@ -119,7 +124,7 @@
             </div>
             <div id="financials" class="fadeIn chartView">
                 <h1>Financials</h1>
-                <table id="financialsTable">
+                <table id="financialsTable" class="fixedTable">
                     <thead>
                       <tr>
                         <td></td>
