@@ -16,35 +16,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let htmlCompanyList = document.querySelector("#companyList"); // Node for the unordered list of companies
 
+    // Displays the assignment credits for five seconds after mousing over the pencil icon.
+    document.querySelector('.credits').addEventListener('mouseover', function() {
+        document.querySelector(".assignmentInfo").style.display = "inline-block";
+        setTimeout(function() {
+            document.querySelector(".assignmentInfo").style.display = "none";
+        }, 5000)
+    })
+
     // Adding event listeners for the button that switches between views.
     for (let button of viewButtons) {
         button.addEventListener('click', function() {
-            if (button.id == "viewChartsButton") {
-                enableChartView();
-            } else {
-                enableDefaultView();
-            }
+            button.id == "viewChartsButton" ? enableChartView() : enableDefaultView();
         })
     }
 
     // Hides all elements in the Default view and shows all elements in Chart view.
     function enableChartView() {
-        for (let element of defaultViewElements) {
-            element.style.display = "none";
-        }
-        for (let element of chartViewElements) {
-            element.style.display = "block";
-        }
+        for (let element of defaultViewElements) element.style.display = "none";
+        for (let element of chartViewElements) element.style.display = "block";
     }
 
     // Hides all elements in the Chart view and shows all elements in Default view.
     function enableDefaultView() {
-        for (let element of defaultViewElements) {
-            element.style.display = "block";
-        }
-        for (let element of chartViewElements) {
-            element.style.display = "none";
-        }
+        for (let element of defaultViewElements) element.style.display = "block"; 
+        for (let element of chartViewElements) element.style.display = "none";
     }
 
     /* Fetching the first set of data that will be used for this website. A list of clickable
@@ -85,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let element = document.createElement('li');
             element.textContent = company.name;
             element.addEventListener('click', async function() {
-                // On company click, fetch stock data about that company
+                // On company click, fetch stock data about that company.
                 tableLoadingAnimation.style.display = 'block';
                 const response = await fetch(stockDataAPI + company.symbol);
                 const stockData = await response.json();
@@ -101,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 setFinancials(company);
                 
             });
-            htmlCompanyList.append(element);
+            htmlCompanyList.append(element); // appending the created element to the unordered list
         }
     }
 
@@ -156,60 +152,59 @@ document.addEventListener('DOMContentLoaded', function() {
         populateStockDataTable(stockData);
     }
 
-    // Populates the table node with cells for all the stock data about a company. 
+    // Populates the stock data table node with cells for all the stock data about a company. 
     function populateStockDataTable(stockData) {
         const tableBody = document.querySelector('#stockDataTable tbody');
         tableBody.innerHTML = "";
-        for (let data of stockData) { // each piece of 'data' will be a single row in the table
-            let row = document.createElement('tr');
+        for (let data of stockData) { 
+            let row = document.createElement('tr'); // each piece of 'data' will be a single row in the table
 
-            let dateCell = document.createElement('td');
-            dateCell.textContent = data.date;
-            row.appendChild(dateCell);
-
+            let dateCell = document.createElement('td'); // creating table cell nodes
             let openCell = document.createElement('td');
             let closeCell = document.createElement('td');
             let lowCell = document.createElement('td');
             let highCell = document.createElement('td');
             let volumeCell = document.createElement('td');
 
+            dateCell.textContent = data.date; // populating created cell nodes with their respective data
             openCell.textContent = currency.format(data.open);
             closeCell.textContent = currency.format(data.close);
             lowCell.textContent = currency.format(data.low);
             highCell.textContent = currency.format(data.high);
             volumeCell.textContent = currency.format(data.volume);
 
+            row.appendChild(dateCell); // adding created cells to the row
             row.appendChild(openCell);
             row.appendChild(closeCell);
             row.appendChild(lowCell);
             row.appendChild(highCell);
             row.appendChild(volumeCell);
-            tableBody.appendChild(row);
+            tableBody.appendChild(row); // adding the completed row to the table
         }
         populateStockSummaryTable(stockData);
     }
 
-    // Populates the table nodes with cells for the "summary" data about a company's stocks (averages, minimums, and maximums).
+    // Populates the table nodes with the "summary" data about a company's stocks (averages, minimums, and maximums).
     function populateStockSummaryTable(stockData) {
-        const openData = stockData.map(stock => stock.open);
+        const openData = stockData.map(stock => stock.open); // creating arrays for each type of stock data
         const closeData = stockData.map(stock => stock.close);
         const lowData = stockData.map(stock => stock.low);
         const highData = stockData.map(stock => stock.high);
         const volumeData = stockData.map(stock => stock.volume);
         
-        document.querySelector('#openAvgCell').textContent = currency.format(average(openData));
+        document.querySelector('#openAvgCell').textContent = currency.format(average(openData)); // populating averages
         document.querySelector('#closeAvgCell').textContent = currency.format(average(closeData));
         document.querySelector('#lowAvgCell').textContent = currency.format(average(lowData));
         document.querySelector('#highAvgCell').textContent = currency.format(average(highData));
         document.querySelector('#volumeAvgCell').textContent = currency.format(average(volumeData));
 
-        document.querySelector('#openMinCell').textContent = currency.format(minimum(openData));
+        document.querySelector('#openMinCell').textContent = currency.format(minimum(openData)); // populating minimums
         document.querySelector('#closeMinCell').textContent = currency.format(minimum(closeData));
         document.querySelector('#lowMinCell').textContent = currency.format(minimum(lowData));
         document.querySelector('#highMinCell').textContent = currency.format(minimum(highData));
         document.querySelector('#volumeMinCell').textContent = currency.format(minimum(volumeData));
 
-        document.querySelector('#openMaxCell').textContent = currency.format(maximum(openData));
+        document.querySelector('#openMaxCell').textContent = currency.format(maximum(openData)); // populating maximums
         document.querySelector('#closeMaxCell').textContent = currency.format(maximum(closeData));
         document.querySelector('#lowMaxCell').textContent = currency.format(maximum(lowData));
         document.querySelector('#highMaxCell').textContent = currency.format(maximum(highData));
@@ -238,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     /* Builds the Charts panel, which contains a bar chart, a candlestick chart, and a line chart detailing
-    *  different information about a given company.
+    *  different information about a given company. All charts are created using Apache ECharts.
     */
     function setCharts(company, stockData) {
         setBarChart(company);
@@ -283,7 +278,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 barGap: 0,
                 data: [company.financials.liabilities[0], company.financials.liabilities[1], company.financials.liabilities[2], ]
             }],
-
         };
         barChart.setOption(chart);
     }
@@ -408,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     /* Creates event listener for the Filter search bar in the Company List panel. When the text
-    *  field is populated, the list of companies 
+    *  field is populated, the list of companies filters to show names that match the search.
     */
     function createFilter(companies) {
         const searchFilter = document.querySelector('#companySearch');
