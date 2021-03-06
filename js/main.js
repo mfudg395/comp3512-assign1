@@ -242,6 +242,7 @@ document.addEventListener('DOMContentLoaded', function() {
     */
     function setCharts(company, stockData) {
         setBarChart(company);
+        setCandlestickChart(stockData);
         setLineChart(stockData);
     }
 
@@ -285,6 +286,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
         };
         barChart.setOption(chart);
+    }
+
+    // Creates the candlestick chart, which displays
+    function setCandlestickChart(stockData) {
+        const candlestickChart = echarts.init(document.querySelector('#candlestickChartContainer'));
+        const openData = stockData.map(stock => stock.open);
+        const closeData = stockData.map(stock => stock.close);
+        const lowData = stockData.map(stock => stock.low);
+        const highData = stockData.map(stock => stock.high);
+        const chart = {
+            tooltip: {},
+            xAxis: {
+                data: ['Average', 'Minimum', 'Maximum']
+            },
+            yAxis: {},
+            grid: { 
+                containLabel: true,
+                left: 0,
+                top: 40,
+                right: 0,
+                bottom: 0
+            },
+            series: [{
+                type: 'k',
+                data: [
+                    [average(openData), average(closeData), average(lowData), average(highData)],
+                    [minimum(openData), minimum(closeData), minimum(lowData), minimum(highData)],
+                    [maximum(openData), maximum(closeData), maximum(lowData), maximum(highData)]
+                ]
+            }]
+        }
+        candlestickChart.setOption(chart);
     }
 
     // Creates the line chart, which plots the 'close' and 'volume' values of a given company.
