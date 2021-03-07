@@ -167,6 +167,7 @@ li:hover { cursor: pointer; }
 .tableHead { font-weight: bold; }
 #stockDataTable .tableHead:hover { cursor: pointer; }
 
+/*table styling adopted & modified from table found at https://www.w3schools.com/css/css_table.asp*/
 table { border-collapse: collapse; }
 tr { border-bottom: 1px solid black; }
 tr:nth-child(even) { background-color: lightgray; }
@@ -190,15 +191,12 @@ th {
     height: 75%;
 }
 
+/*fade-in animation adopted & modified from https://stackoverflow.com/questions/11679567/using-css-for-a-fade-in-effect-on-page-load*/
 .fadeIn { animation: fadeIn 1.5s; }
 
 @keyframes fadeIn {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
+	0% { opacity: 0; }
+	100% { opacity: 1; }
 }
 
 #barChartContainer, #candlestickChartContainer {
@@ -214,7 +212,7 @@ th {
     display: inline-block;
 }
 
-/*Loading animation source: https://loading.io/css/*/
+/*loading animation adopted from https://loading.io/css/*/
 .lds-ring {
     display: block;
     margin: auto;
