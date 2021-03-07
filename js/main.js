@@ -1,7 +1,7 @@
 const companiesAPI = "https://www.randyconnolly.com/funwebdev/3rd/api/stocks/companies.php";
 const stockDataAPI = "https://www.randyconnolly.com/funwebdev/3rd/api/stocks/history.php?symbol=";
 
-const currency = new Intl.NumberFormat('en-us', {style: 'currency', currency: 'USD'}); // used for formatting dollar values
+const currency = (num) => { return new Intl.NumberFormat('en-us', {style: 'currency', currency: 'USD'}).format(num); } // used for formatting dollar values
 
 /* converts a currency to a number, to be used when sorting table data 
 *  adopted from https://stackoverflow.com/questions/31197542/javascript-sort-for-currency-string*/
@@ -59,6 +59,9 @@ document.addEventListener('DOMContentLoaded', function() {
             })
     }
 
+    /* Initiates the creation of the company list panel, which will hold a list of companies with their own
+     * event listeners that display company information when clicked. The search bar and clear button is also created.
+     */
     function createCompanyList(companies) {
         document.querySelector('#companyLoadingAnimation').style.display = 'none';
 
@@ -167,11 +170,11 @@ document.addEventListener('DOMContentLoaded', function() {
             let volumeCell = document.createElement('td');
 
             dateCell.textContent = data.date; // populating created cell nodes with their respective data
-            openCell.textContent = currency.format(data.open);
-            closeCell.textContent = currency.format(data.close);
-            lowCell.textContent = currency.format(data.low);
-            highCell.textContent = currency.format(data.high);
-            volumeCell.textContent = currency.format(data.volume);
+            openCell.textContent = currency(data.open);
+            closeCell.textContent = currency(data.close);
+            lowCell.textContent = currency(data.low);
+            highCell.textContent = currency(data.high);
+            volumeCell.textContent = currency(data.volume);
 
             row.appendChild(dateCell); // adding created cells to the row
             row.appendChild(openCell);
@@ -192,23 +195,23 @@ document.addEventListener('DOMContentLoaded', function() {
         const highData = stockData.map(stock => stock.high);
         const volumeData = stockData.map(stock => stock.volume);
         
-        document.querySelector('#openAvgCell').textContent = currency.format(average(openData)); // populating averages
-        document.querySelector('#closeAvgCell').textContent = currency.format(average(closeData));
-        document.querySelector('#lowAvgCell').textContent = currency.format(average(lowData));
-        document.querySelector('#highAvgCell').textContent = currency.format(average(highData));
-        document.querySelector('#volumeAvgCell').textContent = currency.format(average(volumeData));
+        document.querySelector('#openAvgCell').textContent = currency(average(openData)); // populating averages
+        document.querySelector('#closeAvgCell').textContent = currency(average(closeData));
+        document.querySelector('#lowAvgCell').textContent = currency(average(lowData));
+        document.querySelector('#highAvgCell').textContent = currency(average(highData));
+        document.querySelector('#volumeAvgCell').textContent = currency(average(volumeData));
 
-        document.querySelector('#openMinCell').textContent = currency.format(minimum(openData)); // populating minimums
-        document.querySelector('#closeMinCell').textContent = currency.format(minimum(closeData));
-        document.querySelector('#lowMinCell').textContent = currency.format(minimum(lowData));
-        document.querySelector('#highMinCell').textContent = currency.format(minimum(highData));
-        document.querySelector('#volumeMinCell').textContent = currency.format(minimum(volumeData));
+        document.querySelector('#openMinCell').textContent = currency(minimum(openData)); // populating minimums
+        document.querySelector('#closeMinCell').textContent = currency(minimum(closeData));
+        document.querySelector('#lowMinCell').textContent = currency(minimum(lowData));
+        document.querySelector('#highMinCell').textContent = currency(minimum(highData));
+        document.querySelector('#volumeMinCell').textContent = currency(minimum(volumeData));
 
-        document.querySelector('#openMaxCell').textContent = currency.format(maximum(openData)); // populating maximums
-        document.querySelector('#closeMaxCell').textContent = currency.format(maximum(closeData));
-        document.querySelector('#lowMaxCell').textContent = currency.format(maximum(lowData));
-        document.querySelector('#highMaxCell').textContent = currency.format(maximum(highData));
-        document.querySelector('#volumeMaxCell').textContent = currency.format(maximum(volumeData));
+        document.querySelector('#openMaxCell').textContent = currency(maximum(openData)); // populating maximums
+        document.querySelector('#closeMaxCell').textContent = currency(maximum(closeData));
+        document.querySelector('#lowMaxCell').textContent = currency(maximum(lowData));
+        document.querySelector('#highMaxCell').textContent = currency(maximum(highData));
+        document.querySelector('#volumeMaxCell').textContent = currency(maximum(volumeData));
     }
 
     // Returns the average of a given array of decimal numbers.
@@ -282,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
         barChart.setOption(chart);
     }
 
-    // Creates the candlestick chart, which displays
+    // Creates the candlestick chart, which displays the average, minimum, and maximum data from a company's stock data.
     function setCandlestickChart(stockData) {
         const candlestickChart = echarts.init(document.querySelector('#candlestickChartContainer'));
         const openData = stockData.map(stock => stock.open);
@@ -394,10 +397,10 @@ document.addEventListener('DOMContentLoaded', function() {
         *  This means that the index of a 'year' will be the same index of whichever financial data for that year.
         */
         for (let year of years) {
-            document.querySelector(`#rev${year}`).textContent = currency.format(revenues[years.indexOf(year)]);
-            document.querySelector(`#earn${year}`).textContent = currency.format(earnings[years.indexOf(year)]);
-            document.querySelector(`#asset${year}`).textContent = currency.format(assets[years.indexOf(year)]);
-            document.querySelector(`#lia${year}`).textContent = currency.format(liabilities[years.indexOf(year)]);
+            document.querySelector(`#rev${year}`).textContent = currency(revenues[years.indexOf(year)]);
+            document.querySelector(`#earn${year}`).textContent = currency(earnings[years.indexOf(year)]);
+            document.querySelector(`#asset${year}`).textContent = currency(assets[years.indexOf(year)]);
+            document.querySelector(`#lia${year}`).textContent = currency(liabilities[years.indexOf(year)]);
         }
     }
 
