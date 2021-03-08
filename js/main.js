@@ -246,11 +246,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /* Builds the Charts panel, which contains a bar chart, a candlestick chart, and a line chart detailing
     *  different information about a given company. All charts are created using Apache ECharts.
+    *
+    *  NOTE: In order for the charts to have responsive widths, chart.resize() is called when the window resizes.
+    *  However, ECharts has trouble rendering responsive charts when they're set to "display:none". That's why, 
+    *  if charts need to be built, their display property is temporarily changed to "block".
     */
     function setCharts(company, stockData) {
+        if (company.financials != null) document.querySelector('#charts').style.display = 'block';
         setBarChart(company);
         setCandlestickChart(stockData);
         setLineChart(stockData);
+        document.querySelector('#charts').style.display = 'none';
     }
 
     //  Creates the bar chart, which displays a given company's financial information for 2019, 2018, and 2017.
@@ -291,6 +297,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }],
         };
         barChart.setOption(chart);
+        /* Adopted resize event listeners from https://stackoverflow.com/questions/58370315/how-can-we-make-the-echarts-responsive (this source
+        /* uses jQuery so I modified it to work with purely JS, but the inspiration came from there nonetheless).*/
+        window.addEventListener('resize', () => { barChart.resize() });
     }
 
     // Creates the candlestick chart, which displays the average, minimum, and maximum data from a company's stock data.
@@ -323,6 +332,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }]
         }
         candlestickChart.setOption(chart);
+        window.addEventListener('resize', () => { candlestickChart.resize() });
     }
 
     // Creates the line chart, which plots the 'close' and 'volume' values of a given company.
@@ -369,6 +379,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }],
         };
         lineChart.setOption(chart);
+        window.addEventListener('resize', () => { lineChart.resize() });
     }
 
     // Builds the Company Info panel shown in the Chart view.
