@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function() {
             yAxis: {},
             grid: { 
                 containLabel: true,
-                left: 0,
+                left: 8,
                 top: 40,
                 right: 0,
                 bottom: 0
